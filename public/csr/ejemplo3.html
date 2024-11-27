@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo3</title>
+    <title>Renderizado</title>
     <style>
         h1, h2, div, p {
             text-align: center;
@@ -14,6 +14,7 @@
         a {
             font-size: 3rem;
         }
+        
         p {
             font-weight: 700;
             font-size: 4rem;
@@ -46,38 +47,36 @@
 <body>
     <div><a href="/">🏠</a></div>
     <h1>Renderizado</h1>
-    <h2>Ejemplo 3: CSR Javascript</h2>
-    <ul id="product-list"></ul>
+    <h2>Ejemplo 4: CSR Javascript</h2>
+    <ul id="pokemon-list"></ul>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const productList = document.getElementById('product-list');
+            const pokemonList = document.getElementById('pokemon-list');
 
             async function fetchData() {
                 try {
-                    const res = await fetch('https://rickandmortyapi.com/api/character');
+                    const res = await fetch('https://pokeapi.co/api/v2/pokemon');
                     const data = await res.json();
 
-                    data.results.forEach(character => {
+                    data.results.forEach(poke => {
                         const li = document.createElement('li');
                         li.className = 'py-20 text-center';
 
-                        const img = document.createElement('img');
-                        img.src = character.image;
-                        img.alt = 'foto';
-                        img.className = 'mx-auto';
+                        const namePoke = document.createElement('h1');
+                        namePoke.textContent =  poke.name;
+                        
+                        const urlPoke = document.createElement('p');
+                        urlPoke.textContent = poke.url;
 
-                        const title = document.createElement('b');
-                        title.textContent = character.name
+                        const created = document.createElement('span');
+                       
 
-                        const price = document.createElement('span');
-                        price.textContent = character.created
+                        li.appendChild(namePoke);
+                        li.appendChild(urlPoke);
+                        li.appendChild(created);
 
-                        li.appendChild(img);
-                        li.appendChild(title);
-                        li.appendChild(price);
-
-                        productList.appendChild(li);
+                        pokemonList.appendChild(li);
                     });
                 } catch (error) {
                     console.error('Error fetching products:', error);
